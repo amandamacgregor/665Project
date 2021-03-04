@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap");
+
+/* Style the navigation bar */
+.navbar {
+  width: 100%;
+  padding: 0px 5px 5px 10px;
+  text-transform: uppercase;
+  overflow: auto;
+}
+
+/* Navbar links */
+.navbar a {
+  text-align: center;
+  width: 15%;
+  padding: 22px;
+  color: black;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
+}
+
+/* Navbar links on mouse-over */
+/* Home - pink color */
+#nav1:hover {
+  color: #d61c5b;
+}
+
+/* Sign-in - red color*/
+#nav2:hover {
+  color: #f1573f;
+}
+
+/* Search yellow color */
+#nav3:hover {
+  color: #feb213;
+}
+
+/* Sell green color */
+#nav4:hover {
+  color: #6abc4e;
+}
+
+/* View Cart bluecolor */
+#nav5:hover {
+  color: #2599d8;
+}
+
+/* responsiveness - display the navbar vertically on screens less than 500 pixels */
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+
