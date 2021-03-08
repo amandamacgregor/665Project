@@ -45,7 +45,7 @@ class HappyEarthDisplay {
         echo $output;
     }
  
-        function displayPageFooter()
+    function displayPageFooter()
     {
        $year = date('Y');
        $output = <<<ABC
@@ -63,4 +63,25 @@ class HappyEarthDisplay {
          ABC;
         echo $output;
     }
+
+    function displaySearchForm()
+    {
+       $year = date('Y');
+       $output = <<<ABC
+            <footer>
+               <div class = "footer">
+                     <div class="mission">
+                        <a href="about.php"><span>Learn More About Our Mission</span></a>
+                    <div class = "copyright">
+                        &copy; $year MacGregor/Schoenherr Incorporated
+                    </div>
+               </div>
+            </footer>   
+          </body>
+         </html>
+         ABC;
+        echo $output;
+    }
+
+
 }
