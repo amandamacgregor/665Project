@@ -106,7 +106,7 @@ class HappyEarthDisplay {
                             </section>
                         <label for="size">Size:</label>
                             <select name="size" id="size">
-                                <option value=""></option>
+                                <option value="">Select</option>
                                 <option value="S">Small</option>
                                 <option value="M">Medium</option>
                                 <option value="L">Large</option>
