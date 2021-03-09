@@ -78,7 +78,7 @@ class HappyEarthDisplay {
 
         $aModel = new HappyEarthModel();
 
-        // call the getCategories method
+        // call the get methods
 
         $categoriesList = $aModel->getCategories(); // get the categories to populate the list box
         
@@ -87,6 +87,25 @@ class HappyEarthDisplay {
             extract($aCategory);
             $output .= <<<HTML
                             <option value="$productcategoryid">$name</option>
+                        HTML;
+        }
+
+        $output .= <<<HTML
+                        </select>
+                        </section>
+                        <section>
+                        <label for="condition">Condition:</label>
+                        <select name="condition" id="condition">
+                            <option value="">Select</option>
+                    HTML;
+
+        $conditionsList = $aModel->getConditions(); // get the conditions to populate the list box
+
+        foreach ($conditionsList as $aCondition)
+        {
+            extract($aCondition);
+            $output .= <<<HTML
+                            <option value="$condition">$condition</option>
                         HTML;
         }
 

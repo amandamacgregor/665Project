@@ -14,6 +14,7 @@
     // $_POST is an associative array of the values passed via the HTTP POST method
 
     $category = $_POST['category'];
+    $condition = $_POST['condition'];
     $gender = $_POST['gender'];
     $size = $_POST['size'];
     $startListed = $_POST['startlisted'];
@@ -24,12 +25,12 @@
 
     $productCategoryID = preg_replace("/[^0-9]/", '', $productCategoryID);
 
-    if (!empty($startListed)) {
-        $startListed = $startListed.' 00:00:00.000';
-    }
-    if (!empty($endListed)) {
-        $endListed = $endListed.' 00:00:00.000';
-    }
+    // if (!empty($startListed)) {
+    //     $startListed = $startListed.' 00:00:00.000';
+    // }
+    // if (!empty($endListed)) {
+    //     $endListed = $endListed.' 00:00:00.000';
+    // }
 
     // instantiate a Model object
 
@@ -54,7 +55,7 @@
 
     // Call the getProductsByMultiCriteria method
     
-    $productList = $aModel->getProductsByMultiCriteria((int)$productCategoryID, $gender, $size, $startListed, $endListed, (int)$minPrice, (int)$maxPrice);
+    $productList = $aModel->getProductsByMultiCriteria((int)$productCategoryID, $condition, $gender, $size, $startListed, $endListed, (int)$minPrice, (int)$maxPrice);
 
     // call the displayProducts method
     

@@ -94,9 +94,22 @@ class HappyEarthModel
         return self::executeQuery($query);
     }
 
+    // method to return conditions from Product table
+
+    function getConditions() : array
+    {
+        $query = <<<STR
+                    Select condition
+                    From product
+                    Order by condition
+                    STR;
+        
+        return self::executeQuery($query);
+    }
+
     // method to search for products by category, gender, size, listed date and/or price range
     
-    function getProductsByMultiCriteria(int $productCategoryID, string $gender, string $size, string $startListed, string $endListed, int $minPrice, int $maxPrice) : Array
+    function getProductsByMultiCriteria(int $productCategoryID, string $condition, string $gender, string $size, string $startListed, string $endListed, int $minPrice, int $maxPrice) : Array
     {
 
         // by default, return all the records
@@ -104,9 +117,10 @@ class HappyEarthModel
                     Select name, description, gender, brand, size, price, created
                     From product
                     Where 0=0
+                    And available = 'Y'
                 STR;
         
-                // then, limit from there based on information at hand.
+        // then, limit from there based on information at hand.
         if ($productCategoryID != '')
         {
             $query .= <<<STR
@@ -121,6 +135,13 @@ class HappyEarthModel
                     STR;
         }
         
+        if ($condition != '')
+        {
+            $query .= <<<STR
+                        And condition like '%$condition%'
+                    STR;
+        }
+
         if ($size != '')
         {
             $query .= <<<STR
@@ -131,28 +152,21 @@ class HappyEarthModel
         if ($startListed != '')
         {
             $query .= <<<STR
-                        And created >= '$startListed'
+                        And convert(varchar,Created,23) >= '$startListed'
                     STR;
         }
 
         if ($endListed != '')
         {
             $query .= <<<STR
-                        And created <= '$endListed'
-                    STR;
-        }
-        
-        if ($minPrice !== '')
-        {
-            $query .= <<<STR
-                        And price >= '$minPrice'
+                        And convert(varchar,Created,23) <= '$endListed'
                     STR;
         }
 
-        if ($maxPrice !== '')
+        if ($maxPrice !== 0)
         {
             $query .= <<<STR
-                        And price <= '$maxPrice'
+                        And price <= $maxPrice
                     STR;
         }
     
