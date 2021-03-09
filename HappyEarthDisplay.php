@@ -66,20 +66,128 @@ class HappyEarthDisplay {
 
     function displaySearchForm()
     {
-       $year = date('Y');
-       $output = <<<ABC
-            <footer>
-               <div class = "footer">
-                     <div class="mission">
-                        <a href="about.php"><span>Learn More About Our Mission</span></a>
-                    <div class = "copyright">
-                        &copy; $year MacGregor/Schoenherr Incorporated
-                    </div>
-               </div>
-            </footer>   
-          </body>
-         </html>
-         ABC;
+        $output = <<<ABC
+                    <section>
+                    <form action="searchResults.php" method = "post" name="SearchByMultiCriteria" id="SearchByMultiCriteria">
+                        <label for="category">Category:</label>
+                        <select name="productcategoryid" id="productcategoryid">
+                            <option value="">Select</option>
+                ABC;
+
+        // instantiate a RWSModel object
+
+        $aModel = new HappyEarthModel();
+
+        // call the getCategories method
+
+        $categoriesList = $aModel->getCategories(); // get the categories to populate the list box
+        
+        foreach ($categoriesList as $aCategory)
+        {
+            extract($aCategory);
+            $output .= <<<HTML
+                            <option value="$productcategoryid">$name</option>
+                        HTML;
+        }
+
+        $output .= <<<HTML
+                        </select>
+                        </section>
+                        <section>
+                        <label for="gender">Gender:</label><br>
+                            <input type="radio" id="male" name="gender" value="M">
+                            <label for="male">Male</label><br>
+                            <input type="radio" id="female" name="gender" value="F">
+                            <label for="female">Female</label><br>
+                            <input type="radio" id="nonbinary" name="gender" value="N">
+                            <label for="nonbinary">Non-Binary</label><br>
+                            <input type="radio" id="allgenders" name="gender" value="A" checked="true">
+                            <label for="allgenders">All Genders</label>
+                            </section>
+                        <label for="size">Size:</label>
+                            <select name="size" id="size">
+                                <option value=""></option>
+                                <option value="S">Small</option>
+                                <option value="M">Medium</option>
+                                <option value="L">Large</option>
+                                <option value="XL">Extra Large</option>
+                                <option value="1x">1x</option>
+                                <option value="2x">2x</option>
+                                <option value="3x">3x</option>
+                            </select>
+                        <section>
+                        <label for="listedbetween">Listed Between:</label><br>
+                            <input type="date" id="startlisted" name="startlisted"
+                            value="" min="2021-01-01" max="2021-12-31">
+                            <input type="date" id="endlisted" name="endlisted"
+                            value="" min="2021-01-01" max="2021-12-31">
+                        </section>
+                        <section>
+                        <label for="pricerange">Priced Between:</label><br>
+                            <label for="minprice">Minimum</label>
+                            <input type="number" id="minprice" name="minprice"
+                            value="" min="0" max="500" step="5">
+                            <label for="maxprice">Maximum</label>
+                            <input type="number" id="maxprice" name="maxprice"
+                            value="" min="0" max="500" step="5">
+                        </section>
+                        <p>
+                            <input type="submit" value="Find It!" />
+                            <a href="index.php">Cancel</a>
+                        </p>        
+                        </form>
+                HTML;
+        echo $output;
+    }
+
+    //method to display a list of products in a table
+    
+    function displayProducts (array $aList, string $linkPage) : void
+    {
+        // get a count of the number of products returned by the method
+        
+        $numProducts = count($aList);
+
+        if ($numProducts == 0)
+        {
+            echo "<h3>No matching products found</h3>";
+        }
+        else
+        {   
+            $output = <<<ABC
+                <section>
+                <table>
+                   <caption>$numProducts matching product(s) found</caption>
+                   <tbody>
+            ABC;
+
+            $productNum = 0;
+
+            foreach ($aList as $product)
+            {
+                extract($product);
+                $productNum++;
+                $price = number_format($price, 2);
+                // $dateReleased = date_format(new DateTime($dateintheaters), 'F j, Y');
+                $output .= <<<ABC
+                    <tr>
+                        <td>
+                            $productNum: $name<br />
+                            $description
+                        </td>
+                        <td>
+                            Price: $$price
+                        </td>
+                    </tr>
+                ABC;
+            }
+            $output .= '</tbody> </table> </section>';
+        }
+        $output .= <<<ABC
+                    <p style="text-align: center">
+                    <a href="$linkPage">[Back to Search Page]</a>
+                    </p></section>
+                ABC;
         echo $output;
     }
 

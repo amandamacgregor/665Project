@@ -6,7 +6,7 @@
     
  */
     
-class HappyEarthModel.php
+class HappyEarthModel
 {
     // static method to connect to the database
 
@@ -80,6 +80,90 @@ class HappyEarthModel.php
     }
 
     // various methods begin here
+
+    // method to return categories from ProductCategory table
     
+    function getCategories() : array
+    {
+        $query = <<<STR
+                    Select productcategoryid, name
+                    From productcategory
+                    Order by name
+                 STR;
+        
+        return self::executeQuery($query);
+    }
+
+    // method to search for products by category, gender, size, listed date and/or price range
+    
+    function getProductsByMultiCriteria(int $productCategoryID, string $gender, string $size, string $startListed, string $endListed, int $minPrice, int $maxPrice) : Array
+    {
+
+        // by default, return all the records
+        $query = <<<STR
+                    Select name, description, gender, brand, size, price, created
+                    From product
+                    Where 0=0
+                STR;
+        
+                // then, limit from there based on information at hand.
+        if ($productCategoryID != '')
+        {
+            $query .= <<<STR
+                        And categoryid = $productCategoryID
+                    STR;
+        }
+        
+        if ($gender != 'A')
+        {
+            $query .= <<<STR
+                        And gender like '%$gender%'
+                    STR;
+        }
+        
+        if ($size != '')
+        {
+            $query .= <<<STR
+                        And size like '%$size%'
+                    STR;
+        }
+
+        if ($startListed != '')
+        {
+            $query .= <<<STR
+                        And created >= '$startListed'
+                    STR;
+        }
+
+        if ($endListed != '')
+        {
+            $query .= <<<STR
+                        And created <= '$endListed'
+                    STR;
+        }
+        
+        if ($minPrice !== '')
+        {
+            $query .= <<<STR
+                        And price >= '$minPrice'
+                    STR;
+        }
+
+        if ($maxPrice !== '')
+        {
+            $query .= <<<STR
+                        And price <= '$maxPrice'
+                    STR;
+        }
+    
+        $query .= <<<STR
+                    Order by name
+                STR;
+        echo $query;
+        return self::executeQuery($query);
+    }
+
+    
+
 }
 ?>

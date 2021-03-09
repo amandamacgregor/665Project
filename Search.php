@@ -23,7 +23,7 @@
     
     // call Search form
 
-    $aDisplay->displaySearchForm()
+    $aDisplay->displaySearchForm();
 
     $aDisplay->displayPageFooter();
 ?>
