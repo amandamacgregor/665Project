@@ -25,13 +25,6 @@
 
     $productCategoryID = preg_replace("/[^0-9]/", '', $productCategoryID);
 
-    // if (!empty($startListed)) {
-    //     $startListed = $startListed.' 00:00:00.000';
-    // }
-    // if (!empty($endListed)) {
-    //     $endListed = $endListed.' 00:00:00.000';
-    // }
-
     // instantiate a Model object
 
     $aModel = new HappyEarthModel();

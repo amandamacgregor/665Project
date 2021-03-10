@@ -67,8 +67,8 @@ class HappyEarthDisplay {
     function displaySearchForm()
     {
         $output = <<<ABC
+                    <form action="searchResults.php" method="post" name="searchform" id="searchform" class="form">
                     <section>
-                    <form action="searchResults.php" method = "post" name="SearchByMultiCriteria" id="SearchByMultiCriteria">
                         <label for="category">Category:</label>
                         <select name="productcategoryid" id="productcategoryid">
                             <option value="">Select</option>
@@ -114,15 +114,22 @@ class HappyEarthDisplay {
                         </section>
                         <section>
                         <label for="gender">Gender:</label><br>
+                        <div class="radiodiv">
+                            <div>
                             <input type="radio" id="male" name="gender" value="M">
                             <label for="male">Male</label><br>
                             <input type="radio" id="female" name="gender" value="F">
                             <label for="female">Female</label><br>
+                            </div>
+                            <div>
                             <input type="radio" id="nonbinary" name="gender" value="N">
                             <label for="nonbinary">Non-Binary</label><br>
                             <input type="radio" id="allgenders" name="gender" value="A" checked="true">
                             <label for="allgenders">All Genders</label>
-                            </section>
+                             </div>
+                        </div>
+                        </section>
+                        <section>
                         <label for="size">Size:</label>
                             <select name="size" id="size">
                                 <option value="">Select</option>
@@ -134,6 +141,7 @@ class HappyEarthDisplay {
                                 <option value="2x">2x</option>
                                 <option value="3x">3x</option>
                             </select>
+                        </section>
                         <section>
                         <label for="listedbetween">Listed Between:</label><br>
                             <input type="date" id="startlisted" name="startlisted"

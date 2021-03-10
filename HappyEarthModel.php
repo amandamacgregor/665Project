@@ -173,7 +173,8 @@ class HappyEarthModel
         $query .= <<<STR
                     Order by name
                 STR;
-        echo $query;
+
+        // echo $query;
         return self::executeQuery($query);
     }
 
