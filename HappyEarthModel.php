@@ -114,7 +114,7 @@ class HappyEarthModel
 
         // by default, return all the records
         $query = <<<STR
-                    Select name, description, gender, brand, size, price, created
+                    Select productid, name, description, gender, brand, size, price, created, photo
                     From product
                     Where 0=0
                     And available = 'Y'
@@ -178,7 +178,16 @@ class HappyEarthModel
         return self::executeQuery($query);
     }
 
-    
+    function getProductDetailsByID(int $productID) : array
+    {
+        $query = <<<STR
+                    Select *
+                    From product
+                    Where productid = $productID
+            STR;
+
+        return self::executeQuery($query);
+    }
 
 }
 ?>

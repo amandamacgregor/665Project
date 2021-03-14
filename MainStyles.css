@@ -1,92 +1,101 @@
 @import url(//fonts.googleapis.com/css?family=Vibur);
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap");
 
-header {
-  max-height: 40%;
-  text-align: center;
+/* body and section styles*/
+body {
   background-color: aliceblue;
+  font-family: "Oswald", sans-serif;
 }
 
-footer {
-    color: black;
-    text-align: center;
-    background-color: aliceBlue;
+section {
+  padding-top: 20px;
+  color: white;
 }
 
-/*-- Header --*/
-
-/*.headerContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}*/
-.headerText{
-    /*flex: 1;*/
-    margin: 0px;
-    text-transform: uppercase;
-    z-index: 11;
+#pageContainer {
+  position: relative;
+  min-height: 100vh;
 }
 
-.headerImage{
-    position: relative;
-    top: 4%;
-    right: 4%;
-    z-index: 10;
+#content-wrap {
+  padding-bottom: 2.5rem;
 }
 
-  .headerContainer {
-    font-weight: lighter;
-    font-size: 3.6rem;
-    text-align: right;
-    line-height: 1;
-    color: #c6e2ff;
-  }
-/*-- Animation Keyframes --*/
+.navbar {
+  position: relative;
+  z-index: 3;
+  overflow-x: auto;
+}
 
-h1 {
+/*header styles*/
+
+.headerContainer {
+  height: 40vh;
+  width: 70vw;
+}
+
+.headerImage {
+  position: absolute;
+  right: 8vw;
+  top: 84px;
+  z-index: 0;
+}
+
+.headerText {
+  position: absolute;
+  left: 20vw;
+  height: fit-content;
+  align-content: center;
   font-family: "Oswald", sans-serif;
   text-transform: uppercase;
-  font-size: 13vw;
-  text-align: center;
-  line-height: 1;
-  margin: 0;
-  top: 15%;
-  left: 42%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  color: #2599d8;
-  white-space: nowrap;
-  z-index: 12;
+  font-size: 75px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  z-index: 1;
 }
-h1:before, h1:after,
-h1 span:before,
-h1 span:after {
-  content: attr(data-heading);
-  position: absolute;
-  overflow: hidden;
-  left: 0;
-  top: 0;
-}
-h1:before {
+
+/* Logo Text Colors */
+/* pink color */
+#pink {
   color: #d61c5b;
-  width: 24%;
-  z-index: 5;
+  position: relative;
 }
-h1:after {
+
+/* red color*/
+#red {
   color: #f1573f;
-  width: 45%;
-  z-index: 4;
 }
-h1 span:before {
+
+/* yellow color */
+#yellow {
   color: #feb213;
-  width: 64%;
-  z-index: 3;
 }
-h1 span:after {
+
+/* green color */
+#green {
   color: #6abc4e;
-  width: 83%;
-  z-index: 2;
 }
+
+/*blue color */
+#blue {
+  color: #2599d8;
+}
+
+/*footer styles*/
+footer {
+    color: black;
+    /* position: absolute; */
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    text-align: center;
+    margin-top: 20px;
+    z-index: -1;
+    text-align: center;
+}
+
+/*search form styles */
 .form {
   width: 50%;
   display: flex;
@@ -99,14 +108,7 @@ h1 span:after {
   border: 2px #176087 solid;
   font-size: 18px;
 }
-body {
-  background-color: aliceblue;
-  font-family: "Oswald", sans-serif;
-}
-section {
-  padding-top: 20px;
-  color: white;
-}
+
 input[type=submit] {
   font-family: "Oswald", sans-serif;
   background-color: #feb213;
@@ -120,4 +122,139 @@ input[type=submit] {
 }
 .radiodiv > div {
   margin-right: 10px;
+}
+
+/* search result styles */
+#results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#nomatch, #resultnum {
+  text-align: center;
+}
+
+.productcard {
+  border: #d61c5b 3px solid;
+  border-radius: 10px;
+  min-width: 250px;
+  padding: 15px;
+  text-align: center;
+  margin: 10px;
+}
+
+.viewproduct {
+  padding: 5px 25px;
+  border-radius: 10px;
+  color: #d61c5b;
+  border: #d61c5b 2px solid;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.productcard {
+  color: black;
+}
+
+.productcard img {
+  max-width: 250 px;
+}
+
+/* product page style */
+.productpagecont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.details > dl dt {
+  font-weight: bold;
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 15px;
+}
+
+.productpage, #productadd {
+  text-align: center;
+}
+
+/*home page styles*/
+#welcome {
+  position: relative;
+  text-align: center;
+  max-height: 800px;
+}
+
+#welcomeImage{
+  opacity: 75%;
+  width: 100%;
+}
+
+#tagline {
+  text-transform: lowercase;
+  font-size: 55px;
+  color:white;
+  position: absolute;
+  bottom: 0px;
+  right: 16px;
+}
+
+#welcome {
+  position: relative;
+  text-align: center;
+}
+
+#browse {
+  width: 100%;
+  height: 100px;
+  background-color: #2599d8;
+  text-align: center;
+}
+
+#browseButton {
+  font-family: "Oswald", sans-serif;
+  background-color: #feb213;
+  padding: 10px 20px;
+  width: 50%;
+  font-size: 25px;
+  border-radius: 10px;
+  margin-top: 18px;
+}
+
+#browseButton a {
+  text-decoration: none;
+}
+
+#launch {
+  width: 100%;
+  height: 100px;
+  background-color: #25d2d8;
+  text-align: center;
+}
+
+#create, #login, #learn {
+  background-color: white;
+  margin:20px 20px 20px 20px;
+  width: 20%;
+  border-radius: 10px;
+  font-size: 20px;
+  height: 50%;
+}
+
+#create a, #login a, #learn a {
+  text-decoration: none;
+  color: teal;
+}
+
+#bluespace {
+  width: 100%;
+  height: 100px;
 }

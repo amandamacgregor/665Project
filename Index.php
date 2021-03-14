@@ -4,6 +4,8 @@
     $aDisplay = new HappyEarthDisplay();
     
     $aDisplay->displayPageHeader("Welcome");
+
+    $aDisplay->displayhomePage();
     
     $aDisplay->displayPageFooter();
 ?>
