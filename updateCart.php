@@ -22,9 +22,9 @@ if (isset($_POST['productid']))
 
     if (!isset($_SESSION['aCart']))
     {
-        // instantiate a d9RWSShopCart object and store it in $_SESSION
+        // instantiate a HEShoppingCart object and store it in $_SESSION
 
-        $_SESSION['aCart'] = new HappyEarthCart();
+        $_SESSION['aCart'] = new HEShoppingCart();
     }
     
     // if the form element productqty is set (if the user updates the quantity for a product in their shopping cart)
@@ -42,6 +42,8 @@ if (isset($_POST['productid']))
         $_SESSION['aCart']->addCartItem((int)$_POST['productid']);
     }
 }
+
+// echo "post productid:" . $_POST['productid'];
 header('location:viewCart.php');
 exit();
 ?>

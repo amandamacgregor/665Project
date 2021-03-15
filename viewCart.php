@@ -12,14 +12,19 @@ spl_autoload_register(function ($class_name){
 });
 
 session_start();
+// session_unset();
+
+// instantiate a HappyEarthDisplay object
+
+$aDisplay = new HappyEarthDisplay();
 
 // if the session variable is not set or is empty display appropriate message; otherwise display the items
 
 if (!isset($_SESSION['aCart']) || count($_SESSION['aCart']->getCartItems()) === 0)
 {
-    header('Refresh: 5; URL=Search.php');
-    echo '<h2>You shopping cart is empty <br /> You will be redirected to our store in 5 seconds.</h2>';
-    echo '<h2>If you are not redirected, please <a href="Search.php">Click here to visit our Store</a>.</h2>';
+    $aDisplay->displayPageHeader("Shopping Cart");
+    $aDisplay->emptyCart();
+    $aDisplay->displayPageFooter();
     die();
 }
 
@@ -50,5 +55,6 @@ $aDisplay->displayShopCart($cartList);
 // call the displayPageFooter method 
 
 $aDisplay->displayPageFooter();
+
 
 ?>

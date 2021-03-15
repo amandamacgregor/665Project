@@ -230,7 +230,7 @@ class HappyEarthDisplay {
                             $description
                              <br />
                         <i> \$$price </i> <br /><br />
-                        <a href="productPage.php?productid=$productid" class="viewproduct">View</a>
+                        <a href="productPage.php?productid=$productid" class="viewproduct" >View</a>
                 ABC;
 
                 $output .= <<<ABC
@@ -294,7 +294,7 @@ class HappyEarthDisplay {
                         </div>
                     HTML;
         }
-
+        
         $output .= <<<HTML
                         <div class="details">
                         <dl>
@@ -320,7 +320,8 @@ class HappyEarthDisplay {
                         </div>
                         </div>
                             <form class="productpage" action="updateCart.php" method = "post">
-                            <input type="hidden" name="productid" value =$productid />
+                            <input type="hidden" name="productid" value ="$ProductID" />
+                            
                             <dt><input name = "submit" type="submit" value="Add to Cart" /></dt></form>
                         
                         <p id="productadd">
@@ -463,9 +464,8 @@ class HappyEarthDisplay {
         // prepare the output using heredoc syntax
 
         $output = <<<HTML
-                    <h2 style="text-align: center">You have $cartItems product(s) in your cart</h2>
-                    <div class="shopping-cart">
-                    <table>
+                    <h2 id="cart-count">You have $cartItems product(s) in your cart</h2>
+                    <table class="shopping-cart">
                         <tr>
                             <th>Product</th>
                             <th>Unit Price</th>
@@ -484,27 +484,28 @@ class HappyEarthDisplay {
                                 $name
                             </td>
                             <td>
+                                $formattedPrice
+                            </td>
+                            <td>
                                 <form action="updateCart.php" method="post">
                                     <input type="hidden" name="productid" value="$productid" />
                                     <input type="number" name="productqty" 
                                         value="1" size="2" maxlength="2" 
                                         required="required" min="0" max="20" />
-                                    <input type="submit" name="submit" value="Update Quantity" />
+                                    <input id="update-button" type="submit" name="submit" value="Update Quantity" />
                                 </form>
-                            </td>
-                            <td style="text-align: right">
-                                $$formattedPrice
                             </td>
                         </tr>
                     HTML;
         }
         $output .= <<<HTML
                         <tr>
-                            <td colspan="2" style="text-align: center">
+                            <td colspan="4">
                                 <b>Your order total is: $$formattedTotalPrice</b>
                             </td>
-                        </div>
-                            <td colspan="2" style="text-align: center">
+                            </tr>
+                            <tr>
+                            <td colspan="4">
                                 <form action="Checkout.php" method="post">
                                     <input type="submit" name="submit" id="proceed" value = "Proceed to Checkout" />
                                 </form>
@@ -515,6 +516,21 @@ class HappyEarthDisplay {
                         <a href="Search.php">[Continue shopping]</a>
                     </p>
                     
+                HTML;
+
+        // display the output
+
+        echo $output;
+    }
+
+    function emptyCart() : void
+    {
+
+        // prepare the output using heredoc syntax
+
+        $output = <<<HTML
+                    <h2 style="text-align: center">You have 0 product(s) in your cart</h2>
+                    <a style="text-align: center; display: block" href="Search.php">[Go to Search Page]</a>
                 HTML;
 
         // display the output
