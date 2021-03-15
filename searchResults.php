@@ -6,6 +6,9 @@
     Uses: HappyEarthDisplay, HappyEarthModel
     Action for: Search.php
  */
+    //create or resume session        
+    session_start();
+
     // required Class files
 
     require_once ("HappyEarthDisplay.php");

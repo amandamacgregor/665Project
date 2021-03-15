@@ -6,6 +6,8 @@
     Uses: HappyEarthDisplay, HappyEarthModel
     Action: searchResults.php
  */
+    //create or resume session        
+    session_start();
 
     // required Class files
 
@@ -19,11 +21,14 @@
     
     // call various section display methods
 
-    $aDisplay->displayPageHeader("<br /> Search inventory by Category, Gender, Size, Listed Date and/or Price Rage <br />");
+    // cookies
+
+
+    $aDisplay->displayPageHeader("Search inventory");
     
     // call Search form
 
-    $aDisplay->displaySearchForm();
+    $aDisplay->displaySearchForm($productCategoryId);
 
     $aDisplay->displayPageFooter();
 ?>

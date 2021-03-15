@@ -1,5 +1,11 @@
 <?php declare(strict_types=1);
-    require_once ("HappyEarthDisplay.php");
+    //create or resume session        
+    session_start();
+
+    // automatically load required Class files
+    spl_autoload_register(function ($class_name){
+    include $class_name . '.php';
+    });
     
     $aDisplay = new HappyEarthDisplay();
     

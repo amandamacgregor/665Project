@@ -189,5 +189,114 @@ class HappyEarthModel
         return self::executeQuery($query);
     }
 
+    function getUserData(string $aUserName, string $aUserPassword) : array
+    {
+        $query = <<<STR
+                    Select firstname, lastname, username, email, streetaddress, password
+                    From customer
+                    Where username = '$aUserName'
+                    and password = '$aUserPassword'
+                STR;
+        
+        return self::executeQuery($query);
+    }
+
+        // method to check if username already exists
+    
+        function checkUserName(string $aUserName) : array
+        {
+            $query = <<<STR
+                        Select username
+                        From customer
+                        Where username = '$aUserName'
+                    STR;
+    
+            return self::executeQuery($query);
+        }
+
+        
+        private static function executeAddQuery(string $query) 
+    {
+        // call the dbConnect function
+
+        $conn = self::dbConnect();
+
+        try
+        {
+            // execute query and assign results to a PDOStatement object
+
+            $stmt = $conn->query($query);
+
+            //call dbDisconnect() method to close the connection
+
+            self::dbDisconnect($conn);
+
+            return $results;
+        }
+        catch (PDOException $e)
+        {
+            //if execution fails
+
+            self::dbDisconnect($conn);
+            die ('Query failed: ' . $e->getMessage());
+        }
+    }
+
+        
+        function addNewCustomer(array $aMemberData) : void
+        {
+            // extract array data
+            
+            extract($aMemberData);
+            
+            $query = <<<STR
+                        Insert Into customer(username, password, firstname, lastname, streetaddress, 
+                             email)
+                        Values('$username','$userpassword','$firstname','$lastname','$streetaddress','$email')
+        STR;
+            
+            self::executeAddQuery($query);
+        }
+
+        function getAccountInfo(string $aUserName) : array
+        {
+            $query = <<<STR
+                        Select customerid, firstname, lastname, username, email, streetaddress, password
+                        From customer
+                        Where username = '$aUserName'
+                    STR;
+            
+            return self::executeQuery($query);
+        }
+
+        function updateCustomerAccount(int $customerId, string $username, string $password, string $firstname, string $lastname, string $address, string $email) : void
+        {
+            $username = str_replace('\'', '\'\'', trim($username));
+            $password = str_replace('\'', '\'\'', trim($password));
+            $firstname = str_replace('\'', '\'\'',trim($firstname));
+            $lastname = str_replace('\'', '\'\'',trim($lastname));
+            $address = str_replace('\'', '\'\'',trim($address));
+            $email = str_replace('\'', '\'\'',trim($email));
+    
+            $query = <<<STR
+                        Update customer
+                        Set lastname = '$lastname', password = '$password', firstname = '$firstname', lastname = '$lastname', streetaddress = '$streetaddress', email = '$email'
+                        Where customerid = $customerID
+                    STR;
+    
+            self::executeQuery($query);
+       }
+
+       function getProductsInCart(string $productIDs) : array
+       {
+           $query = <<<STR
+                       Select productid, name, price
+                       From product
+                       Where productid in ($productIDs)
+                   STR;
+   
+           return self::executeQuery($query);
+       }
+
 }
 ?>

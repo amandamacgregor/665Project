@@ -12,47 +12,28 @@ section {
   color: white;
 }
 
-#pageContainer {
-  position: relative;
-  min-height: 100vh;
-}
-
-#content-wrap {
-  padding-bottom: 2.5rem;
-}
-
 .navbar {
   position: relative;
-  z-index: 3;
   overflow-x: auto;
 }
 
 /*header styles*/
+#headerBox {
+  display: flex;
+  justify-content: center;
+}
 
 .headerContainer {
-  height: 40vh;
-  width: 70vw;
-}
-
-.headerImage {
-  position: absolute;
-  right: 8vw;
-  top: 84px;
-  z-index: 0;
-}
-
-.headerText {
-  position: absolute;
-  left: 20vw;
-  height: fit-content;
-  align-content: center;
-  font-family: "Oswald", sans-serif;
   text-transform: uppercase;
   font-size: 75px;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  z-index: 1;
+  height: 40vh;
+}
+
+h1 {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
 }
 
 /* Logo Text Colors */
@@ -68,7 +49,7 @@ section {
 }
 
 /* yellow color */
-#yellow {
+#yellow1, #yellow2 {
   color: #feb213;
 }
 
@@ -189,34 +170,47 @@ input[type=submit] {
 /*home page styles*/
 #welcome {
   position: relative;
-  text-align: center;
   max-height: 800px;
 }
 
 #welcomeImage{
   opacity: 75%;
   width: 100%;
+  display: block;
+  z-index:  5;
+  text-align: center;
+}
+
+#opaque {
+  opacity: .99;
+  z-index:-10;
+  position:relative;
 }
 
 #tagline {
   text-transform: lowercase;
-  font-size: 55px;
-  color:white;
+  color: white;
   position: absolute;
-  bottom: 0px;
-  right: 16px;
-}
-
-#welcome {
-  position: relative;
   text-align: center;
+  left:50%;
+  top:3%;
+  margin-left:-300px;
+  margin-top:-250px;
+  font-size: 5vh;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
 }
 
 #browse {
+  position: relative;
+  margin-top: 20px;
   width: 100%;
   height: 100px;
   background-color: #2599d8;
   text-align: center;
+  z-index: 11;
 }
 
 #browseButton {
@@ -238,6 +232,8 @@ input[type=submit] {
   height: 100px;
   background-color: #25d2d8;
   text-align: center;
+  position: relative;
+  z-index: 11;
 }
 
 #create, #login, #learn {
@@ -254,7 +250,35 @@ input[type=submit] {
   color: teal;
 }
 
-#bluespace {
+/*account form styles */
+h3 {
+  text-align: center;
+}
+
+#signinform, #registerForm, #editaccountform {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #2599d8;
+  margin: 20px auto;
+  border-radius: 10px;
+  border: 2px #176087 solid;
+  font-size: 18px;
+}
+
+#signinbutton, #registerbutton, #deleteaccountbutton {
+  font-family: "Oswald", sans-serif;
+  background-color: #feb213;
   width: 100%;
-  height: 100px;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+
+#deleteaccountbutton a {
+  color: black;
+  text-decoration: none;
 }

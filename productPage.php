@@ -1,10 +1,13 @@
 <?php declare(strict_types=1);
 /*
-    Purpose: Search Page
+    Purpose: Product Page
     Author: AM & TS
     Date: March 2021
     Uses: HappyEarthDisplay, HappyEarthModel
  */
+
+//create or resume session        
+session_start();
 
  // If productid is not passed with page request, redirect to Search Page
 // Else, assign the URL parameter to a variable
@@ -43,7 +46,7 @@ if (count($productList) != 1)
 
 // call various section display methods
 
-$aDisplay->displayPageHeader("Product Details <br />");
+$aDisplay->displayPageHeader("Product Details");
 
 // call the displayProductDetails method
 

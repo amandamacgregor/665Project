@@ -14,35 +14,48 @@ class HappyEarthDisplay {
         <html>
            <head>
               <meta charset="UTF-8" />
-              <title>Happy Earth Styles</title>
+              <title>$pageTitle</title>
               <meta name="viewport" content="width=device-width, initial-scale=1" />  
               <link rel="stylesheet" href="NavbarStyles.css" type="text/css" />
               <link rel="stylesheet" href="MainStyles.css" type="text/css" />
               <script src="https://kit.fontawesome.com/6db76b0f22.js" crossorigin="anonymous"></script>
            </head>
            <body>
-           <div id="pageContainer">
-              <div id = "contentWrap">
               <header>
+                <div id="headerBox">
                     <div class="headerContainer">
-                        <div class="headerText">
                              <h1 id="pink">Ha</h1>
                              <h1 id="red">pp</h1>
-                             <h1 id="yellow">y E</h1>
+                             <h1 id="yellow1">y</h1>
+                             <img src="PastelGlobe.png" alt="Colorful Globe" height="200px" width="200px">
+                             <h1 id="yellow2">E</h1>
                              <h1 id="green">ar</h1>
                              <h1 id="blue">th</h1>
-                        </div>
-                        <div class="headerImage">
-                            <img id="globe" src="PastelGlobe.png" width ='250px' height="230px">
-                        </div>
-      
+
                     </div>
+                </div>
                     <div class="navbar">
-                          <a href="Index.php" id="nav1"><i class="fas fa-igloo"></i> Home</a>
-                          <a href="SignIn.php" id="nav2"><i class="fas fa-user-check"></i> Sign In/Sign Up</a>
-                          <a href="Search.php" id="nav3"><i class="fas fa-search"></i> Search Inventory</a>
-                          <a href="Sell.php" id="nav4"><i class="fas fa-hand-holding-usd"></i> Sell Goods</a>
-                          <a href="Cart.php" id="nav5"><i class="fas fa-shopping-cart"></i> View Cart</a>
+                          <a href="Index.php" id="nav1"><i class="fas fa-igloo"></i> Home</a>                     
+        ABC;
+        // the session array element "userInfo" will be set if the user has been authenticated
+
+        $authStatus = (isset($_SESSION['userInfo']));   
+
+        // checks if the user status is authenticated, if so display "Sign Out", else Sign In/Register"
+
+        if ($authStatus)
+        {
+            $output .= '<a href="SignOut.php" id="nav2"><i class="fas fa-user-check"></i> Sign Out</a>';
+        }
+        else
+        {
+            $output .= '<a href="SignIn.php" id="nav2"><i class="fas fa-user-check"></i> Sign In/Sign Up</a>';
+        }
+
+        $output .= <<<ABC
+                          <a href="ManageAccount.php" id="nav3"><i class="fas fa-hand-holding-usd"></i> Manage Account</a>
+                          <a href="Search.php" id="nav4"><i class="fas fa-search"></i> Search Inventory</a>
+                          <a href="viewCart.php" id="nav5"><i class="fas fa-shopping-cart"></i> View Cart</a>
                     </div>
               </header>
         ABC;
@@ -53,7 +66,6 @@ class HappyEarthDisplay {
     {
        $year = date('Y');
        $output = <<<ABC
-            </div>
             <footer>
                <div class = "footer">
                      <div class="mission">
@@ -78,7 +90,7 @@ class HappyEarthDisplay {
                     <section>
                         <label for="category">Category:</label>
                         <select name="productcategoryid" id="productcategoryid">
-                            <option value="">Select</option>
+                            <option value="$productcategoryid">Select</option>
                 ABC;
 
         // instantiate a RWSModel object
@@ -103,7 +115,7 @@ class HappyEarthDisplay {
                         <section>
                         <label for="condition">Condition:</label>
                         <select name="condition" id="condition">
-                            <option value="">Select</option>
+                            <option value="$condition">Select</option>
                     HTML;
 
         $conditionsList = $aModel->getConditions(); // get the conditions to populate the list box
@@ -121,7 +133,7 @@ class HappyEarthDisplay {
                         </section>
                         <section>
                         <label for="gender">Gender:</label><br>
-                        <div class="radiodiv">
+                        <div value="$gender" class="radiodiv">
                             <div>
                             <input type="radio" id="male" name="gender" value="M">
                             <label for="male">Male</label><br>
@@ -139,7 +151,7 @@ class HappyEarthDisplay {
                         <section>
                         <label for="size">Size:</label>
                             <select name="size" id="size">
-                                <option value="">Select</option>
+                                <option value="$size">Select</option>
                                 <option value="S">Small</option>
                                 <option value="M">Medium</option>
                                 <option value="L">Large</option>
@@ -150,23 +162,23 @@ class HappyEarthDisplay {
                             </select>
                         </section>
                         <section>
-                        <label for="listedbetween">Listed Between:</label><br>
+                        <label for="listedbetween">Listed Betwestartlisteden:</label><br>
                             <input type="date" id="startlisted" name="startlisted"
-                            value="" min="2021-01-01" max="2021-12-31">
+                            value="$startlisted" min="2021-01-01" max="2021-12-31">
                             <input type="date" id="endlisted" name="endlisted"
-                            value="" min="2021-01-01" max="2021-12-31">
+                            value="$endlisted" min="2021-01-01" max="2021-12-31">
                         </section>
                         <section>
                         <label for="pricerange">Priced Between:</label><br>
                             <label for="minprice">Minimum</label>
                             <input type="number" id="minprice" name="minprice"
-                            value="" min="0" max="500" step="5">
+                            value="$minprice" min="0" max="500" step="5">
                             <label for="maxprice">Maximum</label>
                             <input type="number" id="maxprice" name="maxprice"
-                            value="" min="0" max="500" step="5">
+                            value="$maxprice" min="0" max="500" step="5">
                         </section>
                         <p>
-                            <input type="submit" value="Find It!" />
+                            <input type="submit" value="Find It!" name="search" />
                             <a href="index.php">Cancel</a>
                         </p>        
                         </form>
@@ -249,11 +261,9 @@ class HappyEarthDisplay {
                     </div>
 
                     <div id="launch">
-                    <button id="create"><a href="SignIn.php">Create Account</a></button>
+                    <button id="create"><a href="Register.php">Create Account</a></button>
                     <button id="login"><a href="SignIn.php">Sign In</a></button>
                     <button id="learn"><a href="About.php">Learn More</a></button>
-                    </div>
-                    <div id="bluespace">
                     </div>
                 </section>
             ABC;
@@ -319,6 +329,192 @@ class HappyEarthDisplay {
                         
                         
                HTML;
+
+        echo $output;
+    }
+
+    
+    function displaySignInForm (string $aUserName, string $aUserPassword, string $aRedirect) : void
+    {
+        $output = <<<HTML
+                    <form action="SignIn.php" name="signInForm" id="signinform" method="post">
+                    <!-- Store the redirect file name in a hidden field  -->
+                    <input type="hidden" name ="redirect" value = "$aRedirect" />
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id ="userlogin" value= "$aUserLogin" 
+                        maxlength="10" autofocus="autofocus" required="true" 
+                        pattern="^[\w@\.]+$" title="User Name has invalid characters" />
+                    <label for="userpassword">Password:</label> 
+                    <input type="password" name="userpassword" id="userpassword" value="$aUserPassword" 
+                        maxlength="10" required="true" pattern="^[\w@\.]+$" 
+                        title="Password has invalid characters" />
+                    <p>
+                        <input type="submit" value="Sign In" name="signin" id="signinbutton" /> <br />
+                        Not a Member?  <a href="Register.php">Register Here</a>
+                    </p>
+                    </form>
+                HTML;
+                
+        echo $output;
+    }
+
+    function displayRegisterForm (array $aMemberData) : void
+    {
+        // extract array data
+        
+        extract($aMemberData);
+
+        $output = <<<HTML
+                    <form name ="registerForm" id="registerForm" action="Register.php" method="post">
+                        <!-- Store the customer ID in a hidden field  -->
+                        <input type="hidden" name ="customerid" value = "$customerid" />   
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" id ="username" value="$username" 
+                            maxlength="50" autofocus="true" required="true" 
+                            pattern="^[\w@\.]+$" title="Valid characters are a-z 0-9 _ . @" />
+                        <label for="userpassword">Password:</label> 
+                        <input type="password" name="userpassword" id="userpassword" value="$userpassword" 
+                            maxlength="20" required="true" 
+                            pattern="^[\w@\.]+$" title="Valid characters are a-z 0-9 _ . @" />
+                        <label for="firstname">First Name:</label>
+                        <input type="text" name="firstname" id ="firstname" value="$firstname" 
+                            maxlength="50" required="true" pattern="^[a-zA-Z\-]+$" 
+                            title="Valid characters are a-z" />
+                        <label for="lastname">Last Name:</label>
+                        <input type="text" name="lastname" id ="lastname" value="$lastname" 
+                            maxlength="50" required="true" pattern="^[a-zA-Z\-]+$" 
+                            title="Valid characters are a-z" />
+                        <label for="streetaddress">Shipping Address:</label>
+                        <input type="text" name="streetaddress" id ="streetaddress" value="$streetaddress" 
+                            maxlength="255" required="true" 
+                            pattern="^[a-zA-Z0-9][\w\s\.]*[a-zA-Z0-9\.]$" title="Please enter a valid street address" />      
+                        <label for="email">Email:</label>
+                        <input type="text" name="email" id ="email" value="$email" maxlength="255" 
+                            required="true" pattern="^[\w\-\.]+@[\w]+\.[a-zA-Z]{2,4}$" 
+                            title="Enter a valid email" /> 
+                        <p>
+                            <input type="submit" value="Register" name="register" id=registerbutton /> <br />
+                        </p>
+                    </form>
+                HTML;
+        
+        echo $output; 
+    }
+
+    //method to display user's current account info as well as links to edit account info or delete their account
+    //function to display user's current account info as well as links to edit account info or delete their account
+    function displayAccountInfoEditForm (string $aUserName) : void
+    {
+
+        // instantiate a Model object
+        $aModel = new HappyEarthModel();
+
+        //call getAccountInfo function and store results in $accountInfo array
+        $accountInfo = $aModel->getAccountInfo($aUserName);
+
+        //extract data from $accountInfo and store into variables
+        extract($accountInfo[0]);
+        
+        //display form with current account info data prepopulated 
+        $output = <<<HTML
+            <h3>Edit Your Account Info</h3>
+            <form action="EditAccount.php" name="editaccountform" id="editaccountform" method="post">
+
+            <label for="username">Username:</label>
+                        <input type="text" name="username" id ="username" value="$username" 
+                            maxlength="50" autofocus="true" required="true" 
+                            pattern="^[\w@\.]+$" title="Valid characters are a-z 0-9 _ . @" />
+                        <label for="userpassword">Password:</label> 
+                        <input type="password" name="password" id="password" value="$password" 
+                            maxlength="20" required="true" 
+                            pattern="^[\w@\.]+$" title="Valid characters are a-z 0-9 _ . @" />
+                        <label for="firstname">First Name:</label>
+                        <input type="text" name="firstname" id ="firstname" value="$firstname" 
+                            maxlength="50" required="true" pattern="^[a-zA-Z\-]+$" 
+                            title="Valid characters are a-z" />
+                        <label for="lastname">Last Name:</label>
+                        <input type="text" name="lastname" id ="lastname" value="$lastname" 
+                            maxlength="50" required="true" pattern="^[a-zA-Z\-]+$" 
+                            title="Valid characters are a-z" />
+                        <label for="streetaddress">Shipping Address:</label>
+                        <input type="text" name="streetaddress" id ="streetaddress" value="$streetaddress" 
+                            maxlength="255" required="true" 
+                            pattern="^[a-zA-Z0-9][\w\s\.]*[a-zA-Z0-9\.]$" title="Please enter a valid street address" />      
+                        <label for="email">Email:</label>
+                        <input type="text" name="email" id ="email" value="$email" maxlength="255" 
+                            required="true" pattern="^[\w\-\.]+@[\w]+\.[a-zA-Z]{2,4}$" 
+                            title="Enter a valid email" /> 
+                    <p>
+                        <input type="submit" value="Update Account" name="updateaccount" id="updateaccountbutton" /> <br /><br />
+                        <button id="deleteaccountbutton"><a href="DeleteAccount.php">Delete Account</a></button>
+                    </p>
+            </form>
+        HTML;
+        echo $output;
+        
+    }
+
+    function displayShopCart(array $aList) : void
+    {
+        // get a count of the number of items in the cart
+
+        $cartItems = count($aList);
+
+        // prepare the output using heredoc syntax
+
+        $output = <<<HTML
+                    <h2 style="text-align: center">You have $cartItems product(s) in your cart</h2>
+                    <table>
+                        <tr>
+                            <th>Product</th>
+                            <th>Unit Price</th>
+                        </tr>
+                HTML;
+
+        foreach ($aList as $aItem)
+        {
+            extract($aItem);
+            $totalPrice += $price;
+            $formattedPrice = number_format((float)$price, 2);
+            $formattedTotalPrice = number_format((float)$totalPrice, 2);
+            $output .= <<<HTML
+                        <tr>
+                            <td>
+                                $name
+                            </td>
+                            <td>
+                                <form action="updateCart.php" method="post">
+                                    <input type="hidden" name="productid" value="$productid" />
+                                    <input type="number" name="productqty" 
+                                        value="1" size="2" maxlength="2" 
+                                        required="required" min="0" max="20" />
+                                    <input type="submit" name="submit" value="Update Quantity" />
+                                </form>
+                            </td>
+                            <td style="text-align: right">
+                                $$formattedPrice
+                            </td>
+                        </tr>
+                    HTML;
+        }
+        $output .= <<<HTML
+                        <tr>
+                            <td colspan="2" style="text-align: center">
+                                <b>Your order total is: $$formattedTotalPrice</b>
+                            </td>
+                            <td colspan="2" style="text-align: center">
+                                <form action="Checkout.php" method="post">
+                                    <input type="submit" name="submit" id="proceed" value = "Proceed to Checkout" />
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="text-align: center">
+                        <a href="Search.php">[Continue shopping]</a>
+                    </p>
+                HTML;
+
+        // display the output
 
         echo $output;
     }
