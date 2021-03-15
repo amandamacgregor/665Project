@@ -464,6 +464,7 @@ class HappyEarthDisplay {
 
         $output = <<<HTML
                     <h2 style="text-align: center">You have $cartItems product(s) in your cart</h2>
+                    <div class="shopping-cart">
                     <table>
                         <tr>
                             <th>Product</th>
@@ -502,6 +503,7 @@ class HappyEarthDisplay {
                             <td colspan="2" style="text-align: center">
                                 <b>Your order total is: $$formattedTotalPrice</b>
                             </td>
+                        </div>
                             <td colspan="2" style="text-align: center">
                                 <form action="Checkout.php" method="post">
                                     <input type="submit" name="submit" id="proceed" value = "Proceed to Checkout" />
@@ -512,6 +514,7 @@ class HappyEarthDisplay {
                     <p style="text-align: center">
                         <a href="Search.php">[Continue shopping]</a>
                     </p>
+                    
                 HTML;
 
         // display the output

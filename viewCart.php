@@ -47,8 +47,8 @@ $aDisplay->displayPageHeader("Shopping Cart");
 
 $aDisplay->displayShopCart($cartList);
 
-call the displayPageFooter method 
+// call the displayPageFooter method 
 
 $aDisplay->displayPageFooter();
 
-?
+?>

@@ -167,6 +167,14 @@ input[type=submit] {
   text-align: center;
 }
 
+/* cart */
+.shopping-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 /*home page styles*/
 #welcome {
   position: relative;
