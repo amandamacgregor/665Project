@@ -5,6 +5,7 @@
 body {
   background-color: aliceblue;
   font-family: "Oswald", sans-serif;
+  text-align: center;
 }
 
 section {
@@ -299,7 +300,7 @@ h3 {
   font-size: 18px;
 }
 
-#signinbutton, #registerbutton, #deleteaccountbutton {
+#signinbutton, #registerbutton, #deleteaccountbutton, #return {
   font-family: "Oswald", sans-serif;
   background-color: #feb213;
   width: 100%;
@@ -309,7 +310,72 @@ h3 {
   margin-right: 5px;
 }
 
-#deleteaccountbutton a {
+#return {
+  width: 50%;
+}
+
+#deleteaccountbutton a, #return a {
   color: black;
   text-decoration: none;
+}
+
+#updateSucceeded, #deleteSucceeded {
+  background-color: #2599d8;
+  margin: 20px auto;
+  border-radius: 10px;
+  height: 150px;
+  border: 2px #176087 solid;
+  width: 50%;
+}
+
+/* About Page Styles */
+#mission {
+  margin-top: 20px;
+}
+
+#reasons {
+  border-color: #2599d8;
+  border-style: groove;
+  margin: 20px auto;
+  border-radius: 10px;
+  width: 75%;
+  line-height: .5cm;
+}
+
+.number{
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.pink {
+  color: #d61c5b;
+}
+
+/* red color*/
+.red {
+  color: #f1573f;
+}
+
+/* yellow color */
+.yellow {
+  color: #feb213;
+}
+
+/* green color */
+.green {
+  color: #6abc4e;
+}
+
+/*blue color */
+.blue {
+  color: #2599d8;
+}
+
+#sources {
+  margin: 0px;
+  font-size: smaller
+}
+
+h3 {
+  text-decoration: underline;
 }

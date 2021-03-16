@@ -38,7 +38,7 @@ class HappyEarthModel
 
     // static method to execute a query - the SQL statement to be executed, is passed to it
 
-    private static function executeQuery(string $query) : array
+    private static function executeQuery(string $query) 
     {
         // call the dbConnect function
 
@@ -277,15 +277,40 @@ class HappyEarthModel
             $lastname = str_replace('\'', '\'\'',trim($lastname));
             $address = str_replace('\'', '\'\'',trim($address));
             $email = str_replace('\'', '\'\'',trim($email));
+
     
             $query = <<<STR
                         Update customer
-                        Set lastname = '$lastname', password = '$password', firstname = '$firstname', lastname = '$lastname', streetaddress = '$streetaddress', email = '$email'
-                        Where customerid = $customerID
+                        Set username = '$username', password = '$password', firstname = '$firstname', lastname = '$lastname', streetaddress = '$address', email = '$email'
+                        Where customerid = $customerId
                     STR;
     
             self::executeQuery($query);
        }
+
+         //function to deleteCustomerAccount
+        function deleteCustomerAccount(int $customerid){
+            $query = <<<STR
+                    Delete
+                    From customer
+                    Where customerid = $customerid
+                STR;
+
+            self::executeQuery($query);
+
+            //signs user out of current session
+            
+            // the cookie that holds the session id is destroyed
+
+            if (isset($_COOKIE[session_name()]))
+            {
+                setcookie(session_name(),"",time()-3600); //destroy the session cookie on the client
+            }
+
+            $_SESSION = array(); // unset or remove all data from the $_SESSION array
+            session_destroy(); //erase session data from the disk
+            session_write_close(); // make sure the changes are committed 
+        }
 
        function getProductsInCart(string $productIDs) : array
        {

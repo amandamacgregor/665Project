@@ -162,7 +162,7 @@ class HappyEarthDisplay {
                             </select>
                         </section>
                         <section>
-                        <label for="listedbetween">Listed Betwestartlisteden:</label><br>
+                        <label for="listedbetween">Listed Between:</label><br>
                             <input type="date" id="startlisted" name="startlisted"
                             value="$startlisted" min="2021-01-01" max="2021-12-31">
                             <input type="date" id="endlisted" name="endlisted"
@@ -220,7 +220,7 @@ class HappyEarthDisplay {
                         if ($photo != null) 
                             {
                                 $output .= <<<HTML
-                                            <img src="$photo"></a> <br />
+                                            <img src="$photo" height ="100px" width ="80px"></a> <br />
                                         HTML;
                             }
 
@@ -248,6 +248,7 @@ class HappyEarthDisplay {
         echo $output;
     }
 
+    //function to display the elements for the home page/landing page
     function displayhomePage(){
         $output = <<<ABC
                 <section>
@@ -290,7 +291,7 @@ class HappyEarthDisplay {
         {
             $output .= <<<HTML
                         <div style="text-align:center">
-                            <img src = "$Photo" />
+                            <img src = "$Photo" height="350px" width="300px"/>
                         </div>
                     HTML;
         }
@@ -334,7 +335,7 @@ class HappyEarthDisplay {
         echo $output;
     }
 
-    
+    //displays log in form
     function displaySignInForm (string $aUserName, string $aUserPassword, string $aRedirect) : void
     {
         $output = <<<HTML
@@ -358,7 +359,7 @@ class HappyEarthDisplay {
                 
         echo $output;
     }
-
+    //function to display form for customers to create an account
     function displayRegisterForm (array $aMemberData) : void
     {
         // extract array data
@@ -367,8 +368,6 @@ class HappyEarthDisplay {
 
         $output = <<<HTML
                     <form name ="registerForm" id="registerForm" action="Register.php" method="post">
-                        <!-- Store the customer ID in a hidden field  -->
-                        <input type="hidden" name ="customerid" value = "$customerid" />   
                         <label for="username">Username:</label>
                         <input type="text" name="username" id ="username" value="$username" 
                             maxlength="50" autofocus="true" required="true" 
@@ -402,8 +401,7 @@ class HappyEarthDisplay {
         echo $output; 
     }
 
-    //method to display user's current account info as well as links to edit account info or delete their account
-    //function to display user's current account info as well as links to edit account info or delete their account
+    //function to display a form pre-populated wtih user's current account info as well as buttons to edit account info or delete their account
     function displayAccountInfoEditForm (string $aUserName) : void
     {
 
@@ -415,12 +413,24 @@ class HappyEarthDisplay {
 
         //extract data from $accountInfo and store into variables
         extract($accountInfo[0]);
+
+        //extract data from $accountInfo and store into variables
+        extract($accountInfo[0]);
+
+        //trim extra spaces from variables
+        $username = str_replace('\'', '\'\'', trim($username));
+        $password = str_replace('\'', '\'\'', trim($password));
+        $firstname = str_replace('\'', '\'\'',trim($firstname));
+        $lastname = str_replace('\'', '\'\'',trim($lastname));
+        $email = str_replace('\'', '\'\'',trim($email));
+        $streetaddress = str_replace('\'', '\'\'',trim($streetaddress));
         
         //display form with current account info data prepopulated 
         $output = <<<HTML
             <h3>Edit Your Account Info</h3>
             <form action="EditAccount.php" name="editaccountform" id="editaccountform" method="post">
-
+             <!-- Store the customer ID in a hidden field  -->
+             <input type="hidden" name ="customerid" value = "$customerid" />   
             <label for="username">Username:</label>
                         <input type="text" name="username" id ="username" value="$username" 
                             maxlength="50" autofocus="true" required="true" 
@@ -447,12 +457,12 @@ class HappyEarthDisplay {
                             title="Enter a valid email" /> 
                     <p>
                         <input type="submit" value="Update Account" name="updateaccount" id="updateaccountbutton" /> <br /><br />
-                        <button id="deleteaccountbutton"><a href="DeleteAccount.php">Delete Account</a></button>
+                        <button id="deleteaccountbutton"><a href="DeleteAccount.php?customerid=$customerid">Delete Account</a></button>
                     </p>
             </form>
         HTML;
         echo $output;
-        
+        //deleteaccountbutton above passes a URL parameter containing the customerid
     }
 
     function displayShopCart(array $aList) : void
