@@ -116,19 +116,9 @@ class HappyEarthDisplay {
                         <label for="condition">Condition:</label>
                         <select name="condition" id="condition">
                             <option value="$condition">Select</option>
-                    HTML;
-
-        $conditionsList = $aModel->getConditions(); // get the conditions to populate the list box
-
-        foreach ($conditionsList as $aCondition)
-        {
-            extract($aCondition);
-            $output .= <<<HTML
-                            <option value="$condition">$condition</option>
-                        HTML;
-        }
-
-        $output .= <<<HTML
+                                <option value="new">New</option>
+                                <option value="like new">Like New</option>
+                                <option value="used">Used</option>
                         </select>
                         </section>
                         <section>
@@ -229,7 +219,7 @@ class HappyEarthDisplay {
                             $productNum: $name<br />
                             $description
                              <br />
-                        <i> \$$price </i> <br /><br />
+                        <i> \$$price </i> <br /><br /><br />
                         <a href="productPage.php?productid=$productid" class="viewproduct" >View</a>
                 ABC;
 

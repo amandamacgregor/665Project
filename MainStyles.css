@@ -121,10 +121,13 @@ input[type=submit] {
 .productcard {
   border: #d61c5b 3px solid;
   border-radius: 10px;
-  min-width: 250px;
+  /* min-width: 250px; */
   padding: 15px;
   text-align: center;
   margin: 10px;
+  color: black;
+  width: 275px;
+  height: 275px;
 }
 
 .viewproduct {
@@ -137,12 +140,8 @@ input[type=submit] {
   margin-top: 10px;
 }
 
-.productcard {
-  color: black;
-}
-
 .productcard img {
-  max-width: 250 px;
+  max-width: 250px;
 }
 
 /* product page style */
