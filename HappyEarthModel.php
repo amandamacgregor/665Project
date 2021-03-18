@@ -50,11 +50,16 @@ class HappyEarthModel
 
             $stmt = $conn->query($query);
 
-            if ($stmt->columnCount() > 0)  // if rows with columns are returned
+            do
             {
-                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);  //retreive the rows as an associative array
-            }
-
+                if ($stmt->columnCount() > 0)  // if rows with columns are returned
+                {
+                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);  //retreive the rows as an associative array
+                }
+            } while ($stmt->nextRowset());
+            
+            // Note: the loop is intended for situations when a nonquery (e.g., Insert, Update) is followed by a query that returns row(s). 
+           
             //call dbDisconnect() method to close the connection
 
             self::dbDisconnect($conn);
@@ -201,21 +206,20 @@ class HappyEarthModel
         return self::executeQuery($query);
     }
 
-        // method to check if username already exists
-    
-        function checkUserName(string $aUserName) : array
-        {
-            $query = <<<STR
-                        Select username
-                        From customer
-                        Where username = '$aUserName'
-                    STR;
-    
-            return self::executeQuery($query);
-        }
+    // method to check if username already exists
+    function checkUserName(string $aUserName) : array
+    {
+        $query = <<<STR
+                    Select username
+                    From customer
+                    Where username = '$aUserName'
+                STR;
+
+        return self::executeQuery($query);
+    }
 
         
-        private static function executeAddQuery(string $query) 
+    private static function executeAddQuery(string $query) 
     {
         // call the dbConnect function
 
@@ -243,85 +247,171 @@ class HappyEarthModel
     }
 
         
-        function addNewCustomer(array $aMemberData) : void
-        {
-            // extract array data
-            
-            extract($aMemberData);
-            
-            $query = <<<STR
-                        Insert Into customer(username, password, firstname, lastname, streetaddress, 
-                             email)
-                        Values('$username','$userpassword','$firstname','$lastname','$streetaddress','$email')
-        STR;
-            
-            self::executeAddQuery($query);
-        }
+    function addNewCustomer(array $aMemberData) : void
+    {
+        // extract array data
+        
+        extract($aMemberData);
+        
+        $query = <<<STR
+                    Insert Into customer(username, password, firstname, lastname, streetaddress, 
+                            email)
+                    Values('$username','$userpassword','$firstname','$lastname','$streetaddress','$email')
+    STR;
+        
+        self::executeAddQuery($query);
+    }
 
-        function getAccountInfo(string $aUserName) : array
-        {
-            $query = <<<STR
-                        Select customerid, firstname, lastname, username, email, streetaddress, password
-                        From customer
-                        Where username = '$aUserName'
-                    STR;
-            
-            return self::executeQuery($query);
-        }
-
-        function updateCustomerAccount(int $customerId, string $username, string $password, string $firstname, string $lastname, string $address, string $email) : void
-        {
-            $username = str_replace('\'', '\'\'', trim($username));
-            $password = str_replace('\'', '\'\'', trim($password));
-            $firstname = str_replace('\'', '\'\'',trim($firstname));
-            $lastname = str_replace('\'', '\'\'',trim($lastname));
-            $address = str_replace('\'', '\'\'',trim($address));
-            $email = str_replace('\'', '\'\'',trim($email));
-
-    
-            $query = <<<STR
-                        Update customer
-                        Set username = '$username', password = '$password', firstname = '$firstname', lastname = '$lastname', streetaddress = '$address', email = '$email'
-                        Where customerid = $customerId
-                    STR;
-    
-            self::executeQuery($query);
-       }
-
-         //function to deleteCustomerAccount
-        function deleteCustomerAccount(int $customerid){
-            $query = <<<STR
-                    Delete
+    function getAccountInfo(string $aUserName) : array
+    {
+        $query = <<<STR
+                    Select customerid, firstname, lastname, username, email, streetaddress, password
                     From customer
-                    Where customerid = $customerid
+                    Where username = '$aUserName'
+                STR;
+        
+        return self::executeQuery($query);
+    }
+
+    function updateCustomerAccount(int $customerId, string $username, string $password, string $firstname, string $lastname, string $address, string $email) : void
+    {
+        $username = str_replace('\'', '\'\'', trim($username));
+        $password = str_replace('\'', '\'\'', trim($password));
+        $firstname = str_replace('\'', '\'\'',trim($firstname));
+        $lastname = str_replace('\'', '\'\'',trim($lastname));
+        $address = str_replace('\'', '\'\'',trim($address));
+        $email = str_replace('\'', '\'\'',trim($email));
+
+
+        $query = <<<STR
+                    Update customer
+                    Set username = '$username', password = '$password', firstname = '$firstname', lastname = '$lastname', streetaddress = '$address', email = '$email'
+                    Where customerid = $customerId
                 STR;
 
-            self::executeQuery($query);
+        self::executeQuery($query);
+    }
 
-            //signs user out of current session
-            
-            // the cookie that holds the session id is destroyed
+    //function to deleteCustomerAccount
+    function deleteCustomerAccount(int $customerid){
+        $query = <<<STR
+                Delete
+                From customer
+                Where customerid = $customerid
+            STR;
 
-            if (isset($_COOKIE[session_name()]))
-            {
-                setcookie(session_name(),"",time()-3600); //destroy the session cookie on the client
-            }
+        self::executeQuery($query);
 
-            $_SESSION = array(); // unset or remove all data from the $_SESSION array
-            session_destroy(); //erase session data from the disk
-            session_write_close(); // make sure the changes are committed 
+        //signs user out of current session
+        
+        // the cookie that holds the session id is destroyed
+
+        if (isset($_COOKIE[session_name()]))
+        {
+            setcookie(session_name(),"",time()-3600); //destroy the session cookie on the client
         }
 
-       function getProductsInCart(string $productIDs) : array
-       {
-           $query = <<<STR
-                       Select productid, name, price
-                       From product
-                       Where productid in ($productIDs)
-                   STR;
-   
-           return self::executeQuery($query);
-       }
+        $_SESSION = array(); // unset or remove all data from the $_SESSION array
+        session_destroy(); //erase session data from the disk
+        session_write_close(); // make sure the changes are committed 
+    }
+
+    function getProductsInCart(string $productIDs) : array
+    {
+        $query = <<<STR
+                    Select productid, name, price
+                    From product
+                    Where productid in ($productIDs)
+                STR;
+
+        return self::executeQuery($query);
+    }
+    
+    //inserts new order into the database
+    function insertOrder(int $aCustomerID, float $orderTotal)
+    {
+        $query = <<<STR
+                    Insert into orders(customerid, total)
+                    Values ($aCustomerID, $orderTotal);
+                    Select SCOPE_IDENTITY() As orderID;
+                STR;
+    
+        $orderID = self::executeQuery($query);
+        return $orderID;
+    }
+
+    //inserts order items into order
+    function insertOrderItem(int $aOrderID, int $aProductID) : void
+    {
+            $query = <<<STR
+                        Insert into orderlineitem(orderid, productid)
+                        Values ($aOrderID, $aProductID)
+                    STR;
+
+        self::executeQuery($query);
+    }
+
+    //if an item has been purchased in an order, mark that item as unavailable
+    function markItemUnavaiable(int $aProductID) : void {
+        $unavailable = "N";
+        
+        $query = <<<STR
+            Update product
+            Set available = '$unavailable'
+            Where productid = $aProductID
+        STR;
+        
+        self::executeQuery($query);
+    }
+
+    //if an item has been purchased in an order, mark that item as unavailable
+    function markItemAvailable(int $aProductID) : void {
+        $available = "Y";
+        
+        $query = <<<STR
+            Update product
+            Set available = '$available'
+            Where productid = $aProductID
+        STR;
+        
+        self::executeQuery($query);
+    }
+
+    //deletes an order from the database
+    function deleteOrder (int $aOrderID) : void {
+        //gets the product ids of products on the order
+        $query1 = <<<STR
+            Select productid
+            From orderlineitem
+            Where orderid = ($aOrderID)
+         STR;
+        $productIDs = self::executeQuery($query1);
+
+        //loop through each product on the order using the produce ids
+        foreach ($productIDs as $aKey => $aValue){
+            foreach ($aValue as $aID){
+                //mark item available again
+                self::markItemAvailable((int)$aID);
+
+                //delete order line item from order line item table
+                $query3 = <<<STR
+                    Delete
+                    From orderlineitem
+                    Where orderid = $aOrderID
+                        AND productid = $aID
+                STR;
+                self::executeQuery($query3); 
+            }//end nested foreach
+        }//end foreach
+        
+        //deletes order from order table
+        $query4 = <<<STR
+            Delete
+            From orders
+            Where orderid = $aOrderID
+        STR;
+        self::executeQuery($query4);
+    }
 
 }
 ?>

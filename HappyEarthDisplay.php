@@ -455,6 +455,7 @@ class HappyEarthDisplay {
         //deleteaccountbutton above passes a URL parameter containing the customerid
     }
 
+    //displays the user's shopping cart
     function displayShopCart(array $aList) : void
     {
         // get a count of the number of items in the cart
@@ -523,6 +524,7 @@ class HappyEarthDisplay {
         echo $output;
     }
 
+    //displays message to user that their cart is empty
     function emptyCart() : void
     {
 
@@ -538,5 +540,85 @@ class HappyEarthDisplay {
         echo $output;
     }
 
+    //displays the checkout confirmation page
+    function displayCheckOut(array $aList) : void
+    {
+        // get a count of the number of items in the cart
+
+        $cartItems = count($aList);
+
+        // prepare the cart summary output using heredoc syntax
+
+        $output = <<<HTML
+                    <h2 id="cart-count">You have $cartItems product(s) in your cart</h2>
+                HTML;
+        //obtain and format total price
+        foreach ($aList as $aItem)
+        {
+            extract($aItem);
+            $totalPrice += $price;
+            $formattedTotalPrice = number_format((float)$totalPrice, 2);
+        }
+
+        $output .= <<<HTML
+                        <tr>
+                            <td colspan="4">
+                                <b>Your order total is: $$formattedTotalPrice</b>
+                            </td>
+                            <td colspan="4">
+                                <b>Do you wish to confirm you order?</b>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td colspan="4">
+                                <form action="OrderConfirmed.php" method="post">
+                                    <input type="hidden" name="ordertotal" value="$totalPrice" />
+                                    <input type="submit" name="submit" id="proceed" value = "Place Order Now" />
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="text-align: center">
+                        <a href="viewCart.php">[Edit Cart]</a>
+                        <a href="Search.php">[Find More Great Items]</a>
+                    </p>
+                    
+                HTML;
+        //above form passes order total as hidden input field
+        
+        // display the output
+
+        echo $output;
+    }
+
+    //displays confirmation with order number to user after order has been processed
+    //cancel button utilizes order number as URL parameter
+    function displayOrderConfirmation(int $orderNumber) : void {
+        $output = <<<HTML
+                    <div id="orderConfirmed">
+                        <h2 style="text-align: center">Thank you for your order.</h2>
+                        <h2 style="text-align: center">Your Order Confirmation Number is $orderNumber.</h2>
+                        <h2 style="text-align: center">Read more about how <a href="about.php" style="color: darkblue">your order makes the world a better place</a></h2>
+                    </div>
+                    <div id ="cancel order">
+                        <p>Second thoughts? You can cancel your order using the button below </p>
+                        <button id="cancelButton"><a href="CancelOrder.php?orderid=$orderNumber">Cancel Order</a></button>
+                    </div>
+                  HTML;
+
+        echo $output;
+    }
+
+        //displays confirmation to user that their message was deleted
+        function displayOrderCanceled(int $orderNumber) : void {
+            $output = <<<HTML
+                        <div id="orderCanceled">
+                            <h2 style="text-align: center">Order #$orderNumber has been cancelled.</h2>
+                            <h2 style="text-align: center">Return to our <a href="index.php" style="color: darkblue">home page</a></h2>
+                        </div>
+                      HTML;
+    
+            echo $output;
+        }
 
 }
